@@ -1,0 +1,12 @@
+[submodule "src/modules/iq_sim"]
+	path = src/modules/iq_sim
+	url = https://github.com/janchk/iq_sim
+[submodule "src/modules/realsense-ros"]
+	path = src/modules/realsense-ros
+	url = https://github.com/IntelRealSense/realsense-ros.git
+[submodule "src/modules/Kimera-VIO-ROS"]
+	path = src/modules/Kimera-VIO-ROS
+	url = https://github.com/janchk/Kimera-VIO-ROS.git
+[submodule "src/modules/robot_localization"]
+	path = src/modules/robot_localization
+	url = https://github.com/janchk/robot_localization.git

@@ -1,0 +1,8 @@
+<launch>
+<\<?xml version="1.0"?>
+<launch>
+<node pkg="automotive_drone" type="automotive_drone_node" name="automotive_drone">
+    
+</node>
+    
+</launch>
