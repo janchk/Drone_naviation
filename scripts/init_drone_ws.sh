@@ -31,7 +31,7 @@ tmux splitw -w -p 50
 tmux send-keys "export ROS_IP=$ROS_IP" C-m
 tmux send-keys "export ROS_MASTER_URI=$ROS_MASTER_URI" C-m
 tmux send-keys "source $source_path" C-m
-tmux send-keys "roslaunch orb_slam_2 orb_slam2_webcam.launch" C-m
+tmux send-keys "roslaunch orb_slam_2_ros orb_slam2_webcam.launch" C-m
 
 tmux selectp -t 0
 tmux splitw -h -p 33

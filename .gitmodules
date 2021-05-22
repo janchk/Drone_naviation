@@ -13,3 +13,6 @@
 [submodule "src/modules/mavros"]
 	path = src/modules/mavros
 	url = https://github.com/mavlink/mavros.git
+[submodule "src/modules/vision_to_mavros"]
+	path = src/modules/vision_to_mavros
+	url = https://github.com/janchk/vision_to_mavros.git
