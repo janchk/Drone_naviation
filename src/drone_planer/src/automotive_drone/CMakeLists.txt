@@ -139,8 +139,8 @@ include
 add_executable(${PROJECT_NAME}_node src/example.cpp)
 add_executable(${PROJECT_NAME}_square_node src/square.cpp)
 
-target_link_directories(${PROJECT_NAME}_node PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_directories(${PROJECT_NAME}_square_node PRIVATE ${CMAKE_SOURCE_DIR}/include)
+include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/include)
+# include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
