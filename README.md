@@ -23,7 +23,7 @@ To use this platform the several steps need to be taken.
     ```bash 
     git clone --recursive https://github.com/janchk/UAVision
     ```
-2. Source your ROS installation if you don't done it already 
+2. Source your ROS installation if you haven't done it already 
 3. Navigate to source directory
 4. Build project with following command
     ```bash 
