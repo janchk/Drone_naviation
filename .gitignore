@@ -18,3 +18,12 @@ src/modules/pose_graph_tools
 build
 devel
 logs
+models/gazebo
+
+# Untracked temporary files
+*.tlog
+*.raw
+*.param
+*.parm
+*.bin
+*.DAT

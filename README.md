@@ -17,6 +17,11 @@ To use this platform the several steps need to be taken.
 1. Install ROS Noetic (Kenetic version not tested, but should work too)
 2. Install latest OpenCV
 3. (Optional) Install realsense libs if you planning to use with this type of camera (realsense t265)
+4. ADDITIONAL MODULES
+   1. ros-noetic-geographic-msgs
+   2. ros-noetic-mavlink
+   3. ros-noetic-ddynamic-reconfigure
+   4. ros-noetic-mavros
 
 ## Build
 1. Clone project recursively with command 
