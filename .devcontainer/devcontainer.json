@@ -1,0 +1,11 @@
+{
+	"image":"janchk/ros:noetic-desktop-extended",
+	"customizations": {
+		"vscode": {
+		  "extensions": ["ms-iot.vscode-ros"]
+		}
+	  },
+	// "forwardPorts": [3000, 5760, 11311, 14550, 14551],
+	
+	"runArgs": ["--net=host"]
+}

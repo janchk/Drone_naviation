@@ -50,3 +50,5 @@ To test pipeline with your module you need to make following actions
    source devel/setup.bash
    ```
 3. Launch all modules of pipeline. Examples may be found in `scripts/init_sim_ws.sh` script for simulation purposes and in `scripts/init_drone_ws.sh` for UAV experience.
+
+5760
