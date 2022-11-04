@@ -5,6 +5,9 @@ ARG COPTER_TAG=Copter-4.0.4
 # install git 
 RUN apt-get update && apt-get install -y git
 
+# install debug stuff
+RUN apt-get install tmux nano net-tools 
+
 RUN git config --global url."https://github".insteadOf git://github
 
 # Now grab ArduPilot from GitHub
@@ -55,6 +58,10 @@ ENV VEHICLE ArduCopter
 
 # Finally the command
 
-ENTRYPOINT /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --console
+# RUN echo "/ardupilot/Tools/autotest/sim_vehicle.py --no-mavproxy -v ArduCopter -f gazebo-iris --console" >> /entrypoint.sh 
+RUN echo "/ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --out=udp:10.0.0.2:14551 --console" >> /entrypoint.sh 
+
+# ENTRYPOINT bash 
+ENTRYPOINT bash /entrypoint.sh
 
 # ENTRYPOINT /ardupilot/Tools/autotest/sim_vehicle.py --vehicle ${VEHICLE} -I${INSTANCE} --custom-location=${LAT},${LON},${ALT},${DIR} -w -f gazebo-iris --no-rebuild --console --speedup ${SPEEDUP}

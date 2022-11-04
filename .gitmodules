@@ -13,3 +13,6 @@
 [submodule "src/modules/vision_to_mavros"]
 	path = src/modules/vision_to_mavros
 	url = https://github.com/janchk/vision_to_mavros.git
+[submodule "src/modules/aws-robomaker-small-house-world"]
+	path = src/modules/aws-robomaker-small-house-world
+	url = https://github.com/aws-robotics/aws-robomaker-small-house-world.git

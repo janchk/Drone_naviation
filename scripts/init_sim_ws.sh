@@ -26,12 +26,12 @@ tmux send-keys "source $source_path" C-m
 tmux send-keys "sleep 4" C-m
 tmux send-keys "roslaunch iq_sim smallhouse.launch" C-m
 
-tmux selectp -t 0
-tmux split -h -p 33
-tmux send-keys "sleep 6" C-m
-# tmux send-keys "export ROS_IP=$ROS_IP" C-m
-# tmux send-keys "export ROS_MASTER_URI=$ROS_MASTER_URI" C-m
-tmux send-keys "$ardupilot_path/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --console" C-m
+# tmux selectp -t 0
+# tmux split -h -p 33
+# tmux send-keys "sleep 6" C-m
+# # tmux send-keys "export ROS_IP=$ROS_IP" C-m
+# # tmux send-keys "export ROS_MASTER_URI=$ROS_MASTER_URI" C-m
+# tmux send-keys "$ardupilot_path/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --console" C-m
 
 
 

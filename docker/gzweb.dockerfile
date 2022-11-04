@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # install basic dependencies
 RUN apt-get install -y gazebo9 libgazebo9-dev curl git
+RUN cd /usr/bin && ln -fs python3 python
 
 # install build dependencies
 RUN apt-get install -y  libjansson-dev libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential
@@ -25,7 +26,8 @@ WORKDIR gzweb
 RUN git checkout gzweb_1.4.1
 
 RUN sh /usr/share/gazebo/setup.sh
-
+ENV GAZEBO_MODEL_PATH="/gzweb/models/gazebo"
+ADD models models
 RUN . $NVM_DIR/nvm.sh && npm run deploy --- -m
 
 ENTRYPOINT . $NVM_DIR/nvm.sh && npm start

@@ -1,0 +1,48 @@
+version: "3.4"
+services:
+  ardupilot:
+    network_mode: "host"
+    image: janchk/ardupilot:latest
+    container_name: ardupilot
+    # entrypoint: echo $DISPLAY
+    entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --out=udp:10.0.0.2:14551 --console
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --console
+    # entrypoint: bash /entrypoint.sh
+    # entrypoint: /bin/bash 
+    # depends_on:
+      # - ros-master
+    # networks:
+      # - host
+    # environment:
+      # - "ROS_MASTER_URI=http://ros-master:11311"
+      # - "DISPLAY=localhost:10.0"
+      # - "QT_X11_NO_MITSHM=1" #fix some QT bugs
+    #share your user to the container in order to access your x11
+    # user: 0:0 #adapt as needed!
+    user: 0:0 #adapt as needed!
+    # volumes: 
+      #share your x11 socket and permissions to the container
+      # - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # - /home/root/.Xauthority:/home/root/.Xauthority:ro
+      # - /etc/group:/etc/group:ro
+      # - /etc/passwd:/etc/passwd:ro
+      # - /etc/shadow:/etc/shadow:ro
+      # - /etc/sudoers:/etc/sudoers:ro
+      # - /etc/sudoers.d:/etc/sudoers.d:ro
+      # - /home/root:/home/root:rw #share your home with write permissions
+    # build:
+    #   context: ..
+    #   network: host
+    # command: bash
+    # ports:
+      # - 5760:5760
+    stdin_open: true 
+    tty: true
+  gzweb:
+    network_mode: "host"
+    image: janchk/gzweb:latest
+    container_name: gzweb
+    user: 0:0
+    environment:
+      - "NVM_DIR=/root/.nvm"
+    # entrypoint:  /bin/bash -c /root/.nvm/nvm.sh && npm start
