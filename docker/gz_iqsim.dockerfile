@@ -20,8 +20,18 @@ ADD scripts /home/scripts
 RUN cp -r /home/src/modules/aws-robomaker-small-house-world/models /home/models && \
     cp -r /home/src/modules/iq_sim/models/* /home/models
 
+RUN git clone https://github.com/khancyr/ardupilot_gazebo && \
+    cd ardupilot_gazebo && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make -j4 && \
+    make install 
+
 ENV GAZEBO_MODEL_PATH=/home/models
 RUN source /opt/ros/noetic/setup.bash && catkin_make --only-pkg-with-deps iq_sim
+RUN bash /home/scripts/install_geographiclib_datasets.sh
+
 # RUN apt-get install -y x11-apps
 
 ENTRYPOINT source /home/devel/setup.bash && roslaunch iq_sim smallhouse.launch

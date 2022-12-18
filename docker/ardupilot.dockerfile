@@ -6,7 +6,7 @@ ARG COPTER_TAG=Copter-4.0.4
 RUN apt-get update && apt-get install -y git
 
 # install debug stuff
-RUN apt-get install tmux nano net-tools 
+# RUN apt-get install tmux nano net-tools 
 
 RUN git config --global url."https://github".insteadOf git://github
 
@@ -34,6 +34,7 @@ RUN USER=nobody Tools/environment_install/install-prereqs-ubuntu.sh -y
 RUN pip2 uninstall mavproxy -y
 
 RUN pip2 install -U mavproxy
+# RUN pip2 install mavproxy
 
 # Continue build instructions from https://github.com/ArduPilot/ardupilot/blob/master/BUILD.md
 RUN ./waf distclean

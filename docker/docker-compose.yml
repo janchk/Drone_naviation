@@ -3,49 +3,66 @@ services:
   ardupilot:
     network_mode: "host"
     image: janchk/ardupilot:latest
+    build:
+      context: ..
+      dockerfile: docker/ardupilot.dockerfile
     container_name: ardupilot
+    # entrypoint: mavproxy.py --master 'tcp:127.0.0.1:5760'
+    # entrypoint: bash -c '/ardupilot_entrypoint.sh echo $PATH'
+    # entrypoint: export PATH=$PATH:/home/${USER_NAME}/.local/bin && echo $PATH
+    # entrypoint: bash -c 'cat /ardupilot_entrypoint.sh'
     # entrypoint: echo $DISPLAY
-    entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --out=udp:10.0.0.2:14551 --console
-    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --console
-    # entrypoint: bash /entrypoint.sh
-    # entrypoint: /bin/bash 
-    # depends_on:
-      # - ros-master
-    # networks:
-      # - host
-    # environment:
-      # - "ROS_MASTER_URI=http://ros-master:11311"
-      # - "DISPLAY=localhost:10.0"
-      # - "QT_X11_NO_MITSHM=1" #fix some QT bugs
-    #share your user to the container in order to access your x11
-    # user: 0:0 #adapt as needed!
-    user: 0:0 #adapt as needed!
-    # volumes: 
-      #share your x11 socket and permissions to the container
-      # - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      # - /home/root/.Xauthority:/home/root/.Xauthority:ro
-      # - /etc/group:/etc/group:ro
-      # - /etc/passwd:/etc/passwd:ro
-      # - /etc/shadow:/etc/shadow:ro
-      # - /etc/sudoers:/etc/sudoers:ro
-      # - /etc/sudoers.d:/etc/sudoers.d:ro
-      # - /home/root:/home/root:rw #share your home with write permissions
-    # build:
-    #   context: ..
-    #   network: host
-    # command: bash
-    # ports:
-      # - 5760:5760
-    stdin_open: true 
-    tty: true
-  gzweb:
-    network_mode: "host"
-    image: janchk/gzweb:latest
-    container_name: gzweb
-    user: 0:0
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  --console --map
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map --no-mavproxy
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map --no-mavproxy -A --sim-address=10.0.0.2 -A --daemon
+    entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --map -A --sim-address=10.0.0.2 -C --daemon
+    # entrypoint: python3 /ardupilot/Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --console --map 
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --console --map --no-mavproxy
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --out=udp:0.0.0.0:14551 --console
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --console -f gazebo-iris --no-mavproxy
     environment:
-      - "NVM_DIR=/root/.nvm"
-    # entrypoint:  /bin/bash -c /root/.nvm/nvm.sh && npm 
+      # - "ROS_MASTER_URI=http://ros-master:11311"
+      - "NO_AT_BRIDGE=1"
+      - "QT_X11_NO_MITSHM=1" #fix some QT bugs
+      - "NVIDIA_VISIBLE_DEVICES=all"
+      - "NVIDIA_DRIVER_CAPABILITIES=all"
+      - "XAUTHORITYS"
+      - "DISPLAY"
+      # - "PATH=/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:$PATH"
+      # - "PATH=/ardupilot/Tools/autotest:$PATH"
+      # - "PATH=/usr/lib/ccache:$PATH"
+
+    user: 0:0 #adapt as needed!
+    volumes: 
+      # share your x11 socket and permissions to the container
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    # stdin_open: true 
+    # tty: true
+    # entrypoint: bash
+  # gzweb:
+  #   network_mode: "host"
+  #   image: janchk/gzweb:latest
+  #   container_name: gzweb
+  #   user: 0:0
+  #   environment:
+  #     - "NVM_DIR=/root/.nvm"
+  #   # entrypoint:  /bin/bash -c /root/.nvm/nvm.sh && npm
+  mavproxy:
+    network_mode: "host"
+    # image: janchk/mavproxy:latest
+    image: janchk/ardupilot:latest
+    build:
+      context: ..
+      # dockerfile: docker/mavproxy.dockerfile
+      dockerfile: docker/ardupilot.dockerfile
+    container_name: mavproxy
+    entrypoint: mavproxy.py --master 'tcp:127.0.0.1:5760' --daemon
+    # entrypoint: bash
+    # stdin_open: true 
+    # tty: true
+    user: 0:0
+
   gz_iq:
     network_mode: "host"
     build:
@@ -65,14 +82,26 @@ services:
     volumes: 
       # share your x11 socket and permissions to the container
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      # - /home/root/.Xauthority:/home/root/.Xauthority:ro
-      # - /etc/group:/etc/group:ro
-      # - /etc/passwd:/etc/passwd:ro
-      # - /etc/shadow:/etc/shadow:ro
-      # - /etc/sudoers:/etc/sudoers:ro
-      # - /etc/sudoers.d:/etc/sudoers.d:ro
-      # - /home/root:/home/root:rw #share your home with write permissions
     # stdin_open: true 
     # tty: true
     # entrypoint: bash
-    # entrypoint: ls /home/models/drone_with_rs_camera
+    entrypoint: bash /home/scripts/gz_iqsim/start_gz.sh
+  apm_iq:
+    network_mode: "host"
+    build:
+      context: ..
+      dockerfile: docker/gz_iqsim.dockerfile
+    image: janchk/gz_iq
+    runtime: nvidia
+    environment:
+      # - "ROS_MASTER_URI=http://ros-master:11311"
+      - "QT_X11_NO_MITSHM=1" #fix some QT bugs
+      - "NVIDIA_VISIBLE_DEVICES=all"
+      - "NVIDIA_DRIVER_CAPABILITIES=all"
+      - "XAUTHORITYS"
+      - "DISPLAY"
+    #share your user to the container in order to access your x11
+    user: 0:0 #adapt as needed!
+    volumes: 
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    entrypoint: bash /home/scripts/gz_iqsim/start_apm.sh

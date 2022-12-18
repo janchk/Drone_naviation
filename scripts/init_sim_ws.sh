@@ -4,8 +4,9 @@ ROS_IP="localhost"
 # ROS_MASTER_URI="http://192.168.1.70:11311"
 source_path="../devel/setup.bash"
 git_tree_root=$(git rev-parse --show-toplevel)
+
 gazebo_models_path="${git_tree_root}/models/gazebo"
-ardupilot_path="/home/jakhremchik/Documents/drone/other/ardupilot"
+# ardupilot_path="/home/jakhremchik/Documents/drone/other/ardupilot"
 
 tmux new-session -d -s $session
 tmux rename-window 'Drone:|Mavros|VIZ->MAVROS|'
@@ -24,14 +25,14 @@ tmux selectp -t 0
 tmux send-keys "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$gazebo_models_path" C-m
 tmux send-keys "source $source_path" C-m
 tmux send-keys "sleep 4" C-m
-tmux send-keys "roslaunch iq_sim smallhouse.launch" C-m
+tmux send-keys "DISPLAY=:0 & roslaunch iq_sim smallhouse.launch" C-m
 
-# tmux selectp -t 0
-# tmux split -h -p 33
-# tmux send-keys "sleep 6" C-m
-# # tmux send-keys "export ROS_IP=$ROS_IP" C-m
-# # tmux send-keys "export ROS_MASTER_URI=$ROS_MASTER_URI" C-m
-# tmux send-keys "$ardupilot_path/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --console" C-m
+tmux selectp -t 0
+tmux split -h -p 33
+tmux send-keys "sleep 6" C-m
+# tmux send-keys "export ROS_IP=$ROS_IP" C-m
+# tmux send-keys "export ROS_MASTER_URI=$ROS_MASTER_URI" C-m
+tmux send-keys "Xvfb -shmem -screen 0 1280x1024x24" C-m
 
 
 
