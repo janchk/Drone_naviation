@@ -34,4 +34,4 @@ RUN bash /home/scripts/install_geographiclib_datasets.sh
 
 # RUN apt-get install -y x11-apps
 
-ENTRYPOINT source /home/devel/setup.bash && roslaunch iq_sim smallhouse.launch
+# ENTRYPOINT source /home/devel/setup.bash && roslaunch iq_sim smallhouse.launch

@@ -15,7 +15,7 @@ services:
     # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  --console --map
     # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map --no-mavproxy
     # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map --no-mavproxy -A --sim-address=10.0.0.2 -A --daemon
-    entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --map -A --sim-address=10.0.0.2 -C --daemon
+    entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map -C --daemon
     # entrypoint: python3 /ardupilot/Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map
     # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --console --map 
     # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --console --map --no-mavproxy
@@ -48,20 +48,6 @@ services:
   #   environment:
   #     - "NVM_DIR=/root/.nvm"
   #   # entrypoint:  /bin/bash -c /root/.nvm/nvm.sh && npm
-  mavproxy:
-    network_mode: "host"
-    # image: janchk/mavproxy:latest
-    image: janchk/ardupilot:latest
-    build:
-      context: ..
-      # dockerfile: docker/mavproxy.dockerfile
-      dockerfile: docker/ardupilot.dockerfile
-    container_name: mavproxy
-    entrypoint: mavproxy.py --master 'tcp:127.0.0.1:5760' --daemon
-    # entrypoint: bash
-    # stdin_open: true 
-    # tty: true
-    user: 0:0
 
   gz_iq:
     network_mode: "host"
@@ -85,7 +71,8 @@ services:
     # stdin_open: true 
     # tty: true
     # entrypoint: bash
-    entrypoint: bash /home/scripts/gz_iqsim/start_gz.sh
+    entrypoint: gazebo --verbose worlds/iris_arducopter_demo.world
+
   apm_iq:
     network_mode: "host"
     build:
