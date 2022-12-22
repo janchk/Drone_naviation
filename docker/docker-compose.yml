@@ -7,20 +7,7 @@ services:
       context: ..
       dockerfile: docker/ardupilot.dockerfile
     container_name: ardupilot
-    # entrypoint: mavproxy.py --master 'tcp:127.0.0.1:5760'
-    # entrypoint: bash -c '/ardupilot_entrypoint.sh echo $PATH'
-    # entrypoint: export PATH=$PATH:/home/${USER_NAME}/.local/bin && echo $PATH
-    # entrypoint: bash -c 'cat /ardupilot_entrypoint.sh'
-    # entrypoint: echo $DISPLAY
-    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  --console --map
-    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map --no-mavproxy
-    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map --no-mavproxy -A --sim-address=10.0.0.2 -A --daemon
     entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map -C --daemon
-    # entrypoint: python3 /ardupilot/Tools/autotest/sim_vehicle.py -f gazebo-iris --console --map
-    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --console --map 
-    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --console --map --no-mavproxy
-    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --out=udp:0.0.0.0:14551 --console
-    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --console -f gazebo-iris --no-mavproxy
     environment:
       # - "ROS_MASTER_URI=http://ros-master:11311"
       - "NO_AT_BRIDGE=1"
@@ -29,17 +16,12 @@ services:
       - "NVIDIA_DRIVER_CAPABILITIES=all"
       - "XAUTHORITYS"
       - "DISPLAY"
-      # - "PATH=/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:$PATH"
-      # - "PATH=/ardupilot/Tools/autotest:$PATH"
-      # - "PATH=/usr/lib/ccache:$PATH"
 
     user: 0:0 #adapt as needed!
     volumes: 
       # share your x11 socket and permissions to the container
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-    # stdin_open: true 
-    # tty: true
-    # entrypoint: bash
+
   # gzweb:
   #   network_mode: "host"
   #   image: janchk/gzweb:latest
@@ -64,31 +46,37 @@ services:
       - "XAUTHORITYS"
       - "DISPLAY"
     #share your user to the container in order to access your x11
-    user: 0:0 #adapt as needed!
+    user: 0:0 
     volumes: 
       # share your x11 socket and permissions to the container
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    entrypoint: bash /home/scripts/gz_iqsim/start_gz.sh
     # stdin_open: true 
     # tty: true
     # entrypoint: bash
-    entrypoint: gazebo --verbose worlds/iris_arducopter_demo.world
-
   apm_iq:
     network_mode: "host"
     build:
       context: ..
       dockerfile: docker/gz_iqsim.dockerfile
     image: janchk/gz_iq
+    user: 0:0 
+    entrypoint: bash /home/scripts/gz_iqsim/start_apm.sh
+
+  rviz:
+    network_mode: "host"
+    build: 
+      context: ..
+      dockerfile: docker/gz_iqsim.dockerfile
+    image: janchk/gz_iq
     runtime: nvidia
     environment:
-      # - "ROS_MASTER_URI=http://ros-master:11311"
-      - "QT_X11_NO_MITSHM=1" #fix some QT bugs
+      - "QT_X11_NO_MITSHM=1"
       - "NVIDIA_VISIBLE_DEVICES=all"
       - "NVIDIA_DRIVER_CAPABILITIES=all"
       - "XAUTHORITYS"
       - "DISPLAY"
-    #share your user to the container in order to access your x11
-    user: 0:0 #adapt as needed!
+    user: 0:0 
     volumes: 
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-    entrypoint: bash /home/scripts/gz_iqsim/start_apm.sh
+    entrypoint: bash -c "source /opt/ros/noetic/setup.bash && rviz"

@@ -60,7 +60,7 @@ ENV VEHICLE ArduCopter
 # Finally the command
 
 # RUN echo "/ardupilot/Tools/autotest/sim_vehicle.py --no-mavproxy -v ArduCopter -f gazebo-iris --console" >> /entrypoint.sh 
-RUN echo "/ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --out=udp:10.0.0.2:14551 --console" >> /entrypoint.sh 
+RUN echo "/ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter --console" >> /entrypoint.sh 
 
 # ENTRYPOINT bash 
 ENTRYPOINT bash /entrypoint.sh

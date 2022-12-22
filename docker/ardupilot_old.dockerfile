@@ -13,7 +13,7 @@ RUN git config --global url."https://github".insteadOf git://github
 
 # Now grab ArduPilot from GitHub
 # RUN git clone https://github.com/ArduPilot/ardupilot.git ardupilot --recursive
-RUN git clone httpsUSER rootUSER rootUSER root://github.com/ArduPilot/ardupilot.git ardupilot
+RUN git clone https://github.com/ArduPilot/ardupilot.git ardupilot
 WORKDIR ardupilot
 
 # Checkout the latest Copter...

@@ -12,7 +12,12 @@ RUN apt-get install -y curl git cmake tmux
 RUN cd /usr/bin && ln -fs python3 python
 
 # install ros pkgs
-RUN apt-get install -y ros-noetic-gazebo-ros ros-noetic-mavros
+RUN apt-get install -y \
+                        ros-noetic-gazebo-ros \ 
+                        ros-noetic-mavros \
+                        ros-noetic-gazebo-plugins \
+                        ros-noetic-sensor-msgs \
+                        ros-noetic-rviz
 
 ADD src /home/src
 ADD scripts /home/scripts
