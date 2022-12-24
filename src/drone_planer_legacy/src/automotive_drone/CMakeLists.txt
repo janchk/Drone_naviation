@@ -138,6 +138,7 @@ include
 # add_executable(${PROJECT_NAME}_node src/gazebo_drone_node.cpp)
 add_executable(${PROJECT_NAME}_node src/example.cpp)
 add_executable(${PROJECT_NAME}_square_node src/square.cpp)
+add_executable(${PROJECT_NAME}_hover_node src/hover.cpp)
 
 include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/include)
 # include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/include)
@@ -152,6 +153,7 @@ include_directories(PRIVATE ${CMAKE_SOURCE_DIR}/include)
 ## same as for the library above
 add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(${PROJECT_NAME}_square_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_hover_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
@@ -161,6 +163,11 @@ target_link_libraries(${PROJECT_NAME}_node
 target_link_libraries(${PROJECT_NAME}_square_node
   ${catkin_LIBRARIES}
 )
+
+target_link_libraries(${PROJECT_NAME}_hover_node
+  ${catkin_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############

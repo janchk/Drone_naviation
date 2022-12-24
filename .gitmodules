@@ -16,3 +16,6 @@
 [submodule "src/modules/aws-robomaker-small-house-world"]
 	path = src/modules/aws-robomaker-small-house-world
 	url = https://github.com/aws-robotics/aws-robomaker-small-house-world.git
+[submodule "src/modules/orb_slam3_ros"]
+	path = src/modules/orb_slam3_ros
+	url = https://github.com/janchk/orb_slam3_ros.git

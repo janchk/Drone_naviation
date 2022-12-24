@@ -7,6 +7,7 @@ services:
       context: ..
       dockerfile: docker/ardupilot.dockerfile
     container_name: ardupilot
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --no-mavproxy
     entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map -C --daemon
     environment:
       # - "ROS_MASTER_URI=http://ros-master:11311"
