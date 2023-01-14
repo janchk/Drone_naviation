@@ -8,7 +8,8 @@ services:
       dockerfile: docker/ardupilot.dockerfile
     container_name: ardupilot
     # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --no-mavproxy
-    entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map -C --daemon
+    # entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter  -f gazebo-iris --console --map -C --daemon
+    entrypoint: /ardupilot/Tools/autotest/sim_vehicle.py -v ArduCopter -f gazebo-iris --console -C --daemon
     environment:
       # - "ROS_MASTER_URI=http://ros-master:11311"
       - "NO_AT_BRIDGE=1"
@@ -80,4 +81,6 @@ services:
     user: 0:0 
     volumes: 
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
-    entrypoint: bash -c "source /opt/ros/noetic/setup.bash && rviz"
+    # entrypoint: bash -c "source /opt/ros/noetic/setup.bash && rviz"
+    entrypoint: bash -c "source /opt/ros/noetic/setup.bash && rosrun rqt_tf_tree rqt_tf_tree & \
+               source /opt/ros/noetic/setup.bash && rviz"

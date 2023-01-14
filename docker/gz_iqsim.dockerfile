@@ -17,14 +17,8 @@ RUN apt-get install -y \
                         ros-noetic-mavros \
                         ros-noetic-gazebo-plugins \
                         ros-noetic-sensor-msgs \
-                        ros-noetic-rviz
-
-ADD src /home/src
-ADD scripts /home/scripts
-
-RUN cp -r /home/src/modules/aws-robomaker-small-house-world/models /home/models && \
-    cp -r /home/src/modules/iq_sim/models/* /home/models
-
+                        ros-noetic-rviz \
+                        ros-noetic-rqt-tf-tree
 RUN git clone https://github.com/khancyr/ardupilot_gazebo && \
     cd ardupilot_gazebo && \
     mkdir build && \
@@ -32,6 +26,12 @@ RUN git clone https://github.com/khancyr/ardupilot_gazebo && \
     cmake .. && \
     make -j4 && \
     make install 
+
+ADD src /home/src
+ADD scripts /home/scripts
+
+RUN cp -r /home/src/modules/aws-robomaker-small-house-world/models /home/models && \
+    cp -r /home/src/modules/iq_sim/models/* /home/models
 
 ENV GAZEBO_MODEL_PATH=/home/models
 RUN source /opt/ros/noetic/setup.bash && catkin_make --only-pkg-with-deps iq_sim
