@@ -84,3 +84,24 @@ services:
     # entrypoint: bash -c "source /opt/ros/noetic/setup.bash && rviz"
     entrypoint: bash -c "source /opt/ros/noetic/setup.bash && rosrun rqt_tf_tree rqt_tf_tree & \
                source /opt/ros/noetic/setup.bash && rviz"
+  external:
+    network_mode: "host"
+    container_name: uav_external
+    build:
+      context: ..
+      dockerfile: docker/gz_iqsim.dockerfile
+    image: janchk/gz_iq
+    runtime: nvidia
+    environment:
+      - "QT_X11_NO_MITSHM=1" #fix some QT bugs
+      - "NVIDIA_VISIBLE_DEVICES=all"
+      - "NVIDIA_DRIVER_CAPABILITIES=all"
+      - "XAUTHORITYS"
+      - "DISPLAY"
+    user: 0:0 
+    volumes: 
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./:/opt/host
+    stdin_open: true 
+    tty: true
+    entrypoint: bash

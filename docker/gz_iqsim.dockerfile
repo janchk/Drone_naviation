@@ -18,13 +18,14 @@ RUN apt-get install -y \
                         ros-noetic-gazebo-plugins \
                         ros-noetic-sensor-msgs \
                         ros-noetic-rviz \
-                        ros-noetic-rqt-tf-tree
+                        ros-noetic-rqt-tf-tree \
+                        ros-noetic-rqt-image-view
 RUN git clone https://github.com/khancyr/ardupilot_gazebo && \
     cd ardupilot_gazebo && \
     mkdir build && \
     cd build && \
     cmake .. && \
-    make -j4 && \
+    make -j$(nproc) && \
     make install 
 
 ADD src /home/src
